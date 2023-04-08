@@ -1,6 +1,6 @@
 
 import { StyleSheet } from 'react-native';
-import { Routes } from './src/routes'
+import  Routes  from './src/routes'
 import { NavigationContainer } from '@react-navigation/native'
 
 //Componente principal

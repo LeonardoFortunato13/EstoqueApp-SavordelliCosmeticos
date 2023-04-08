@@ -1,16 +1,25 @@
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-//criando a barra de navegação
-const Tab = createBottomTabNavigator();
-import { Home } from '../screens/home';
-import { Estoque } from '../screens/estoque';
-import { Menu } from '../screens/menu'
+import 'react-native-gesture-handler';
+
+import { Home } from '../screens/Home';
+import { Estoque } from '../screens/Stock';
+import { Menu } from '../screens/Menu'
 
 //biblioteca de icones
 import { Ionicons } from '@expo/vector-icons'
+import { Welcome } from '../screens/Welcome';
+import { SignIn } from '../screens/SignIn';
+import { SignUp } from '../screens/SignUp';
 
-//executando e renderizando a tab barra de navegação
-export function Routes() {
+
+//usando o evento de criar navegações da lib ReacNavigation
+export const Tab = createBottomTabNavigator();
+export const Stack = createStackNavigator();
+
+export function MyStack() {
     return (
+        //usando a const Tab que cria a barra de navegação em baixo
         <Tab.Navigator
             screenOptions={{
                 //esconde a barra de navegacao quando abrir o teclado
@@ -68,7 +77,33 @@ export function Routes() {
         </Tab.Navigator>
     )
 
+}
 
+//função que manipula minhas rotas de navegação
+export function Routes() {
+    return (
+        //usando a const Stack que cria a barra de navegação em pilhas
+        <Stack.Navigator
+        screenOptions={{}
 
+        }
+        >
+            <Stack.Screen
+                name="Welcome"
+                component={Welcome} />
+               
+            <Stack.Screen
+                name="SignIn"
+                component={SignIn} />
+
+            <Stack.Screen
+                name="SignUp"
+                component={SignUp} />
+
+            <Stack.Screen
+                name="Main"
+                component={MyStack} />
+        </Stack.Navigator>
+    );
 }
 

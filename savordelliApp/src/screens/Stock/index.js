@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { Inputt } from "../../../components/inputs/input";
+import { Inputt } from "../../components/Input/index";
 
 export function Estoque() {
     return (

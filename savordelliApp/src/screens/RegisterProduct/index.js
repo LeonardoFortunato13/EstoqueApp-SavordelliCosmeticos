@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet } from "react-native";
 
-export function Menu() {
+export function RegisterProduct() {
     return (
         <View style={styles.container}>
-            <Text>ao depressaokkkkk</Text>
+            <Text>welcomi tu the junglue</Text>
         </View>
     )
 }

@@ -22,14 +22,14 @@ import {
   //objeto do esquema de validaçao da biblioteca yup
   
   
-  export function RegisterProduct({ }) {
+  export function EditProduct({ }) {
     
     const route = useRoute();
     const navigation = useNavigation();
     const schema = yup.object({
       cod_barra: yup.string().max(20, "código de barras não preenchido").required("Insira o código de barra do produto"),
       nome: yup.string().max(45, "nome não preenchido").required("Insira o nome do produto"),
-      //categoria: yup.string().max(6, "informe a categoria do produto").required("Insira o nome da categoria"),
+      // categoria: yup.string().max(6, "informe a categoria do produto").required("Insira o nome da categoria"),
       tamanho: yup.string().max(15, "informe o tamanho do produto em ml").required("Insira o tamanho do produto"),
       descricao: yup.string().max(400, "descrição não preenchida").required("Insira a descrição do produto"),
       imagem_link: yup.string().max(300, "informe a url da imagem do produto").required("Insira a url do do produto"),
@@ -37,10 +37,10 @@ import {
       data_vencimento: yup.number().moreThan(11, 'Número muito grande'),
       qtd_estoque: yup.number().max(6, "informe a quantidade do produto").required("Insira a quantidade do produto"),
       qtd_min: yup.number().max(6, "informe a quantidade mínima do produto no estoque").required("Insira a quantidade do produto"),
-      preco_custo: yup.number(parseFloat()),
+      preco_custo: yup.number().moreThan(6),
       preco_venda: yup.number().max(6, "informe o preço de venda do produto").required("Insira o preço do produto"),
       marca_id: yup.string().max(15, "informe a marca do produto").required("Insira o nome da marca do produto"),
-   
+      nome_novo: yup.string().max(45, "nome não preenchido").required("Insira o nome do produto"),
     })
   
     //constantes que mudam de estado, por causa da lib react hook form
@@ -50,25 +50,17 @@ import {
   
     const idProduct = route.params?.data.id
     //funçao que valida os valores dos inputs e entra na tela estoque
-    async function handleRegisterProduct(data) {
+    async function handleEditProduct(data) {
       try {
   
-        const response = await fetch('http://192.168.43.184:3030/Produto/create',
+        const response = await fetch('http://192.168.43.184:3030/Produto/edit',
           {
-            method: 'POST',
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data, {"imagem_blob": ""}),
+            body: JSON.stringify(data),
           });
-          // const responseCategoria = await fetch('http://192.168.43.184:3030/Categoria/create',
-          // {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          //   body: JSON.stringify(data),
-          // });
         console.log(data)
         if (response.ok) {
           ToastAndroid.show('Produto cadastrado com sucesso 🎉!', ToastAndroid.SHORT);
@@ -271,12 +263,11 @@ import {
     return (
       <ScrollView style={styles.container}>
   
-        <TouchableOpacity style={styles.imgContainer}onPress={chooseImage}>
+        <TouchableOpacity onPress={chooseImage}>
           <Image
             style={styles.img}
             source={{ uri: imageSource }}
           />
-          <Ionicons name="images-outline" size={32} />
         </TouchableOpacity>
   
         {/* form de cadastro do produto */}
@@ -293,7 +284,7 @@ import {
                 <Controller
                   control={control}
                   name="imagem_link"
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({ field: { onChange, onBlur } }) => (
   
                     <TextInput
                       style={[styles.input, {
@@ -302,7 +293,7 @@ import {
                       }]}
                       placeholder={"Digite a URL da imagem"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params.data.imagem}
                       onBlur={onBlur}//quando o text input é tocado
                     />
                   )}
@@ -314,7 +305,7 @@ import {
                 <Controller
                   control={control}
                   name="cod_barra"
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({ field: { onChange, onBlur } }) => (
                     <View style={styles.boxInputIcon}>
                       <TextInput
                         style={[styles.inputIcon, {
@@ -323,7 +314,7 @@ import {
                         }]}
                         placeholder={"Escaneie o codigo de barra do produto"}
                         onChangeText={onChange}
-                        value={value}
+                        value={route.params.data.cod_barra}
                         onBlur={onBlur}//quando o text input é tocado
   
                       />
@@ -349,7 +340,7 @@ import {
                       }]}
                       placeholder={"Escolha o novo nome do produto"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params?.data.nome}
                       onBlur={onBlur}//quando o text input é tocado
   
                     />
@@ -357,8 +348,10 @@ import {
                 />
                 {/* //quando errors usename for true, vai renderizar essa altercao */}
                 {errors.nome && <Text style={styles.labelError}> {errors.nome?.message} </Text>}
-
-                   <Text style={styles.title}>imagem_blob</Text>
+  
+  
+                
+                <Text style={styles.title}>imagem_blob</Text>
                   <Controller
                     control={control}
                     name="imagem_blob"
@@ -382,7 +375,7 @@ import {
                     )}
                   /> 
                  
-                 {errors.imagem_blob && <Text style={styles.labelError}> {errors.imagem_blob?.message} </Text>}  
+                 {errors.imagem_blob && <Text style={styles.labelError}> {errors.imagem_blob?.message} </Text>}
   
                 <Text style={styles.title}>Marca</Text>
                 <Controller
@@ -397,7 +390,7 @@ import {
                         }]}
                         placeholder={"Escolha a marca do produto"}
                         onChangeText={onChange}
-                        value={value}
+                        value={route.params.data.marca_id}
                         onBlur={onBlur}//quando o text input é tocado
   
                       />
@@ -424,7 +417,7 @@ import {
                       }]}
                       placeholder={"Altere a quantidade de produtos"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params?.data.qtd_estoque}
                       onBlur={onBlur}//quando o text input é tocado
   
                     />
@@ -446,7 +439,7 @@ import {
                       }]}
                       placeholder={"Altere a quantidade minima do produto"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params.data.qtd_min}
                       onBlur={onBlur}//quando o text input é tocado
   
                     />
@@ -536,7 +529,7 @@ import {
                       }]}
                       placeholder={"Altere o tamanho do produto"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params?.data.tamanho}
                       onBlur={onBlur}//quando o text input é tocado
   
                     />
@@ -556,7 +549,7 @@ import {
                       }]}
                       placeholder={"Altere a descrição do produto"}
                       onChangeText={onChange}
-                      value={value}
+                      value={route.params?.data.descricao}
                       onBlur={onBlur}//quando o text input é tocado
   
                     />
@@ -565,11 +558,30 @@ import {
                 {/* //quando errors usename for true, vai renderizar essa altercao */}
                 {errors.descricao && <Text style={styles.labelError}> {errors.descricao?.message} </Text>}
                
-               
+                <Text style={styles.title}>Novo nome</Text>
+                <Controller
+                  control={control}
+                  name="nome_novo"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      style={[styles.input, {
+                        borderWidth: errors.nome_novo && 2,
+                        borderColor: errors.nome_novo && '#ff375b'
+                      }]}
+                      placeholder={"Digite o novo nome do produto"}
+                      onChangeText={onChange}
+                      value={route.params?.data.nome_novo}
+                      onBlur={onBlur}//quando o text input é tocado
+  
+                    />
+                  )}
+                />
+                {/* //quando errors usename for true, vai renderizar essa altercao */}
+                {errors.novo_nome && <Text style={styles.labelError}> {errors.nome_novo?.message} </Text>}
                 
                 <View style={styles.containerButtons}>
   
-                  <TouchableOpacity onPress={handleSubmit(handleRegisterProduct)} style={styles.buttonCadastro}>
+                  <TouchableOpacity onPress={handleSubmit(handleEditProduct)} style={styles.buttonCadastro}>
                     <Text style={styles.buttonText}>Feito</Text>
                   </TouchableOpacity>
   
@@ -590,23 +602,14 @@ import {
       flex: 1,
       backgroundColor: '#f2f2f2',
       padding: 20,
-      width: '100%',
-    
-    
+      width: '100%'
+  
     },
     img: {
       width: 180,
       height: 180,
-      backgroundColor: '#F0A500',
-      alignSelf: 'center',
-      position: 'absolute'
-    },
-    imgContainer:{
-        width: 170,
-        height: 170,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center'
+      backgroundColor: 'purple',
+      alignSelf: 'center'
     },
     title: {
       fontSize: 16,

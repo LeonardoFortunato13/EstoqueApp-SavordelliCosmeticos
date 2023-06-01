@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Estoque } from '../screens/Stock'
 import {Detail} from  '../screens/Detail'
+import { EditProduct } from '../screens/EditProduct';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ export function StackRoutes() {
                 name="Estoque"
                 component={Estoque}
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                 }}
             />
             <Stack.Screen
@@ -22,6 +23,14 @@ export function StackRoutes() {
                 options={{
                     headerShown: true,
                     title: "detalhes do produto"
+                }}
+            />
+             <Stack.Screen
+                name="b"
+                component={EditProduct}
+                options={{
+                    headerShown: true,
+                    title: "Editar o produto"
                 }}
             />
             

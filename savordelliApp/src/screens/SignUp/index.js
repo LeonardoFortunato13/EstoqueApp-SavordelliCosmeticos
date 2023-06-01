@@ -1,41 +1,64 @@
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Keyboard, Button, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Keyboard, Button, Alert, ToastAndroid } from "react-native";
 import * as Animatable from 'react-native-animatable'
 import { TextInput, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Controller, useForm } from 'react-hook-form'
 
+//https://github.com/jquense/yup/blob/master/README.md --> DOCUMENTAÇÂO DA BIBLIOTECA
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { SafeAreaView } from "react-native-safe-area-context";
 
-//objeto do esquema de validaçao
+//objeto do esquema de validaçao da biblioteca yup 
+//aqui passo o nome do atributo e seus tipos
+//passo a quantidade maxima e mínima de caracteres que podem ser inseridos
+//se ele é obrigatório ou não
 const schema = yup.object({
-
-    name: yup.string().required("Informe seu nome"),
-    username: yup.string().email("Email invalido").required("Email pode estar incorreto"),
-    password: yup.string().min(6, "A senha deve ter no minimo seis digitos").required("Senha pode estar incorreta"),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null],'As senhas devem ser iguais'),
+    username: yup.string().required("Informe seu nome"),
+    email: yup.string().email("Email invalido").max(64).required("Insira seu e-mail"),
+    password: yup.string().min(6, "A senha deve ter no minimo seis digitos").required("Defina uma senha"),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'As senhas devem ser iguais').required("Insira as senhas corretamente"),
 
 })
 
 export function SignUp({ navigation }) {
 
-    //constantes que mudam de estado, por causa da lib react hook form
+    //função que recebe o objeto data, que contem todos atributos que o usuário inseriu nos campos,
+    // realiza a requisição http do tipo POST mandando data para o endpoint User/create e cria o usuario
+    //e por fim trata o callback da api e navega para tela de login
+    async function handleCreateUser(data) {
+
+        try {
+            const response = await fetch('http://18.231.16.235:3030/User/create',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+            
+            if (response.ok) {             
+                
+                ToastAndroid.show('Usuario cadastrado com sucesso!', ToastAndroid.SHORT);
+                return navigation.navigate("SignIn")
+            
+            } else {
+                console.error('Erro ao cadastrar o usuario:', response.error);
+            }
+        } catch (error) {
+            console.error('Erro ao realizar a solicitação:', error);
+        }
+
+    }
+
+    //parametros da lib reactHookForm para enviar um formulário
+    //control 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     })
 
-    //funçao que valida os valores dos inputs e entra na tela home
-    function handleSignIn(values) {
-
-        return (
-
-            console.log(values)
-        )
-    }
-
     return (
-        <View style={styles.container}>
-
-
+        <SafeAreaView style={styles.container}>
 
             {/* form de login */}
             <View style={styles.containerForm} >
@@ -47,45 +70,42 @@ export function SignUp({ navigation }) {
                             <Text style={styles.title}>Crie uma conta para poder acessar o app</Text>
                         </Animatable.View>
 
-
                         <Animatable.View delay={500} animation="fadeInUp" style={styles.containerInputs}>
 
                             <Text style={styles.titleCadastro}>Cadastro</Text>
 
+                            {/* //quando errors username for true, vai renderizar essa altercao */}
                             <Text style={styles.label}>Nome</Text>
-                            <Controller
-                                control={control}
-                                name="name"
-                                render={({ field: { onChange, onBlur, value } }) => (
-
-                                    <TextInput
-                                        style={[styles.input, {
-                                            borderWidth: errors.name && 2,
-                                            borderColor: errors.name && '#ff375b',
-
-
-                                        }]}
-                                        placeholder="Digite seu e-mail"
-                                        onChangeText={onChange}
-                                        value={value}
-                                        onBlur={onBlur}//quando o text input é tocado
-
-                                    />
-                                )}
-                            />
-                            {/* //quando errors usename for true, vai renderizar essa altercao */}
-                            {errors.name && <Text style={styles.labelError}> {errors.name?.message} </Text>}
-
-                            <Text style={styles.label}>Email</Text>
                             <Controller
                                 control={control}
                                 name="username"
                                 render={({ field: { onChange, onBlur, value } }) => (
-
                                     <TextInput
                                         style={[styles.input, {
                                             borderWidth: errors.username && 2,
-                                            borderColor: errors.username && '#ff375b'
+                                            borderColor: errors.username && '#ff375b',
+                                        }]}
+                                        placeholder="Digite seu username de usuário"
+                                        onChangeText={onChange}
+                                        value={value}
+                                        onBlur={onBlur}//quando o text input é tocado
+
+                                    />
+                                )}
+                            />
+                        
+                            {errors.username && <Text style={styles.labelError}> {errors.username?.message} </Text>}
+
+                            <Text style={styles.label}>Email</Text>
+                            <Controller
+                                control={control}
+                                name="email"
+                                render={({ field: { onChange, onBlur, value } }) => (
+
+                                    <TextInput
+                                        style={[styles.input, {
+                                            borderWidth: errors.email && 2,
+                                            borderColor: errors.email && '#ff375b'
                                         }]}
                                         placeholder="Digite seu e-mail"
                                         onChangeText={onChange}
@@ -95,8 +115,8 @@ export function SignUp({ navigation }) {
                                     />
                                 )}
                             />
-                            {/* //quando errors usename for true, vai renderizar essa altercao */}
-                            {errors.username && <Text style={styles.labelError}> {errors.username?.message} </Text>}
+                       
+                            {errors.email && <Text style={styles.labelError}> {errors.email?.message} </Text>}
 
                             <Text style={styles.label}>Senha</Text>
                             <Controller
@@ -139,12 +159,12 @@ export function SignUp({ navigation }) {
                                     />
                                 )}
                             />
-                            {/* //quando errors usename for true, vai renderizar essa altercao */}
+                           
                             {errors.confirmPassword && <Text style={styles.labelError}> {errors.confirmPassword?.message} </Text>}
 
 
                             <View style={styles.containerButtons}>
-                                <TouchableOpacity onPress={handleSubmit(handleSignIn)} style={styles.buttonCadastro}>
+                                <TouchableOpacity onPress={handleSubmit(handleCreateUser)} style={styles.buttonCadastro}>
                                     <Text style={styles.buttonText}>Cadastrar</Text>
                                 </TouchableOpacity>
 
@@ -153,7 +173,7 @@ export function SignUp({ navigation }) {
                     </KeyboardAvoidingView>
                 </TouchableWithoutFeedback>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -177,17 +197,17 @@ const styles = StyleSheet.create({
     },
 
     containerInputs: {
-        maxWidth:'100%',
+        maxWidth: '100%',
         width: '100%',
-        maxHeight:'100%', 
+        maxHeight: '100%',
         borderTopLeftRadius: 11,
         borderTopRightRadius: 11,
-        borderBottomLeftRadius:11,
-        borderBottomRightRadius:11,
+        borderBottomLeftRadius: 11,
+        borderBottomRightRadius: 11,
         paddingStart: '5%',
         paddingEnd: '5%',
         backgroundColor: '#F0A500'
-    
+
     },
     label: {
         fontSize: 16,
@@ -196,7 +216,7 @@ const styles = StyleSheet.create({
         paddingTop: '1%'
     },
     titleCadastro: {
-        color:'#000',
+        color: '#000',
         fontSize: 24,
         fontWeight: 'bold',
         marginTop: 30,
@@ -214,7 +234,7 @@ const styles = StyleSheet.create({
 
     buttonCadastro: {
         marginTop: '6%',
-        marginBottom:30,
+        marginBottom: 30,
         start: '60%',
         width: '40%',
         backgroundColor: 'black',
@@ -231,7 +251,7 @@ const styles = StyleSheet.create({
     labelError: {
         alignSelf: 'flex-start',
         color: '#ff375b',
-        marginBottom: 8,
+
     },
     title: {
         fontSize: 28,

@@ -38,20 +38,20 @@ const styles = StyleSheet.create({
         width: '90%',
         maxWidth: '90%',
         height: 54,
+       
     },
     boxInput: {
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#DFDFDF',
         width: '100%',
         borderRadius: 8,
         marginTop: 16,
         marginBottom: 16,
-
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingLeft: 14,
+        paddingRight: 14,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-
+       
 
     }
 })

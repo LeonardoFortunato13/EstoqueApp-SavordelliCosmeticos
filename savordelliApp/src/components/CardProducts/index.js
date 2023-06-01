@@ -31,11 +31,11 @@ export function Card({text1, text2, text3, text4, text5, img}) {
     }
 const styles = StyleSheet.create({
     card: {
-        width: 360,
+        width: '100%',
         height: 110,
-        backgroundColor: 'red',
         borderRadius: 10,
         borderWidth:2,
+        backgroundColor: '#fff',
         alignItems: 'center',
         flexDirection: 'row',
         marginTop:10
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         marginStart: 5,
         paddingStart: 10,
         paddingTop: 5,
-        backgroundColor: 'purple',
+
     },
     containerText2: {
         width: '28%',
@@ -55,14 +55,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column-reverse',
         marginStart: 5,
         paddingStart: 5,
-        paddingBottom: 5,
-        backgroundColor: 'purple',
-        
+        paddingBottom: 5,    
     }, 
     img: {
         width: '25%',
         height: '80%',
-        backgroundColor: 'white',
+        backgroundColor: '#a2a2a2',
         marginStart: 12
 
     },

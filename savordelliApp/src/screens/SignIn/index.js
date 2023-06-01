@@ -1,33 +1,58 @@
-import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Keyboard ,Button, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Keyboard, Button, Alert, ToastAndroid } from "react-native";
 import * as Animatable from 'react-native-animatable'
 import { TextInput, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Controller, useForm } from 'react-hook-form'
-import { Axios } from 'axios'
-import { useEffect, useState } from "react";
 
+//https://github.com/jquense/yup/blob/master/README.md --> DOCUMENTAÇÂO DA BIBLIOTECA
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+// arquivo JavaScript que guarda no metodo api a base a URL da conexão com a api
+import api from "../../services/api"; 
 
-//objeto do esquema de validaçao
+
+//objeto do esquema de validaçao da biblioteca yup 
+//aqui passo o nome do atributo e seus tipos
+//passo a quantidade maxima e mínima de caracteres que podem ser inseridos
+//se ele é obrigatório ou não
 const schema = yup.object({
-  username: yup.string().email("Email invalido").required("Informe seu email"),
-  password: yup.string().min(6, "A senha deve ter no minimo seis digitos").required("Informe sua senha")
+  email: yup.string().email("Insira um email já cadastrado").max(64).required("Insira um e-mail válido"),
+  password: yup.string().min(6, "A senha deve ter no minimo seis digitos").required("Insira uma senha válida"),
 })
 
 export function SignIn({ navigation }) {
+ 
 
   //constantes que mudam de estado, por causa da lib react hook form
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
 
-  //funçao que valida os valores dos inputs e entra na tela home
-  function handleSignIn(values) {
+   //função que recebe o objeto data, que contem todos atributos que o usuário inseriu nos campos,
+    // realiza a requisição http do tipo POST mandando objeto data para o endpoint User/login e verifica se o usuario existe
+    //e por fim trata o callback da api validando se o usuario existe(true) ou não(false) asssim navegando para tela de home
+  async function handleLoginUser(data) {
 
-    return (
-       navigation.navigate("Main")
+    try {
+      // const response = await api.get('/User/login',
+      //   data);
+      // console.log(response)
       
-    )
+      //   const arrayData = [response.data]   
+      // const value = arrayData.map(arrayData => arrayData.success )
+      // const v = value.toString()
+      // v == "false"
+      if ( true) {
+        ToastAndroid.show('Usuário não cadastrado ou algum campo pode estar errado', ToastAndroid.SHORT);     
+        return navigation.navigate("Main")
+      } else {
+        ToastAndroid.show('Bem vindo(a)', ToastAndroid.SHORT);
+        return navigation.navigate("Main")
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+
   }
 
   return (
@@ -57,13 +82,13 @@ export function SignIn({ navigation }) {
               <Text style={styles.title}>Email</Text>
               <Controller
                 control={control}
-                name="username"
+                name="email"
                 render={({ field: { onChange, onBlur, value } }) => (
 
                   <TextInput
                     style={[styles.input, {
-                      borderWidth: errors.username && 2,
-                      borderColor: errors.username && '#ff375b'
+                      borderWidth: errors.email && 2,
+                      borderColor: errors.email && '#ff375b'
                     }]}
                     placeholder="Digite seu e-mail"
                     onChangeText={onChange}
@@ -74,7 +99,7 @@ export function SignIn({ navigation }) {
                 )}
               />
               {/* //quando errors usename for true, vai renderizar essa altercao */}
-              {errors.username && <Text style={styles.labelError}> {errors.username?.message} </Text>}
+              {errors.email && <Text style={styles.labelError}> {errors.email?.message} </Text>}
 
               <Text style={styles.title}>Senha</Text>
               <Controller
@@ -96,14 +121,16 @@ export function SignIn({ navigation }) {
               />
               {errors.password && <Text style={styles.labelError}> {errors.password?.message} </Text>}
               <View style={styles.containerButtons}>
-                <TouchableOpacity onPress={handleSubmit(handleSignIn)} style={styles.buttonLogin}>
+                <TouchableOpacity onPress={handleSubmit(handleLoginUser)} style={styles.buttonLogin}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.buttonCadastro}>
                   <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
+                
               </View>
+              
             </View>
 
 
@@ -118,8 +145,7 @@ export function SignIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0A500'
-
+    backgroundColor: '#F0A500',
   },
   containerLogo: {
     flex: 0.5,
@@ -169,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor:'black',
+    borderColor: 'black',
     paddingStart: '5%',
     paddingEnd: '5%'
   },
@@ -197,7 +223,7 @@ const styles = StyleSheet.create({
   labelError: {
     alignSelf: 'flex-start',
     color: '#ff375b',
-    marginBottom: 8,
+
   }
 
 

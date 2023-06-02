@@ -53,7 +53,7 @@ import {
     async function handleRegisterProduct(data) {
       try {
   
-        const response = await fetch('http://192.168.43.184:3030/Produto/create',
+        const response = await fetch('http://192.168.15.45:3030/Produto/create',
           {
             method: 'POST',
             headers: {

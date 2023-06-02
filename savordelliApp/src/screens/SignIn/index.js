@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 // arquivo JavaScript que guarda no metodo api a base a URL da conexão com a api
-import api from "../../services/api"; 
+import api from "../../services/api";
 
 
 //objeto do esquema de validaçao da biblioteca yup 
@@ -15,34 +15,36 @@ import api from "../../services/api";
 //passo a quantidade maxima e mínima de caracteres que podem ser inseridos
 //se ele é obrigatório ou não
 const schema = yup.object({
+  
   email: yup.string().email("Insira um email já cadastrado").max(64).required("Insira um e-mail válido"),
   password: yup.string().min(6, "A senha deve ter no minimo seis digitos").required("Insira uma senha válida"),
 })
 
 export function SignIn({ navigation }) {
- 
+
 
   //constantes que mudam de estado, por causa da lib react hook form
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
 
-   //função que recebe o objeto data, que contem todos atributos que o usuário inseriu nos campos,
-    // realiza a requisição http do tipo POST mandando objeto data para o endpoint User/login e verifica se o usuario existe
-    //e por fim trata o callback da api validando se o usuario existe(true) ou não(false) asssim navegando para tela de home
+  //função que recebe o objeto data, que contem todos atributos que o usuário inseriu nos campos,
+  // realiza a requisição http do tipo POST mandando objeto data para o endpoint User/login e verifica se o usuario existe
+  //e por fim trata o callback da api validando se o usuario existe(true) ou não(false) asssim navegando para tela de home
   async function handleLoginUser(data) {
 
     try {
       // const response = await api.get('/User/login',
       //   data);
-      // console.log(response)
-      
-      //   const arrayData = [response.data]   
-      // const value = arrayData.map(arrayData => arrayData.success )
+      // console.log(response.data)
+
+      // const arrayData = [response.data]
+      // const value = arrayData.map(arrayData => arrayData.success)
       // const v = value.toString()
+
       // v == "false"
-      if ( true) {
-        ToastAndroid.show('Usuário não cadastrado ou algum campo pode estar errado', ToastAndroid.SHORT);     
+      if (true) {
+        ToastAndroid.show('Usuário não cadastrado ou algum campo pode estar errado', ToastAndroid.SHORT);
         return navigation.navigate("Main")
       } else {
         ToastAndroid.show('Bem vindo(a)', ToastAndroid.SHORT);
@@ -78,6 +80,8 @@ export function SignIn({ navigation }) {
             <Text style={styles.titleLogin}>Login</Text>
 
             <View style={styles.containerInputs}>
+
+              
 
               <Text style={styles.title}>Email</Text>
               <Controller
@@ -128,9 +132,9 @@ export function SignIn({ navigation }) {
                 <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.buttonCadastro}>
                   <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
-                
+
               </View>
-              
+
             </View>
 
 

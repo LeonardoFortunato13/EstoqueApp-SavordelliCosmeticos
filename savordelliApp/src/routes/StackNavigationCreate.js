@@ -4,6 +4,7 @@ import { Create } from '../screens/Create';
 import { RegisterCategory } from '../screens/RegisterCategory';
 import { RegisterSubcategory } from '../screens/RegisterSubcategory';
 import { RegisterMarca } from '../screens/RegisterMarca';
+import { Menu } from '../screens/Menu';
 
 
 const Stack = createStackNavigator();
@@ -46,6 +47,14 @@ export function CreateRoutes() {
               <Stack.Screen
                 name="Cadastrar Marca"
                 component={RegisterMarca}
+                options={{
+                    headerShown: true,
+          
+                }}
+            /> 
+            <Stack.Screen
+                name="Menu"
+                component={Menu}
                 options={{
                     headerShown: true,
           

@@ -47,7 +47,7 @@ export function Detail() {
             <Pressable>
 
                 <Image
-                    source={{ uri: route.params?.data.imagem }}
+                    source={{ uri: route.params?.data.imagem_link }}
                     style={styles.image}
                 />
             </Pressable>

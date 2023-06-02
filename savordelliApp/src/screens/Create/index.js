@@ -47,7 +47,7 @@ export function Create() {
         </View>
         
         <View style={styles.containerButtonsOne}>
-          <TouchableOpacity style={styles.cardButton}>
+          <TouchableOpacity style={styles.cardButton} onPress={()=> navigation.navigate("Menu")}>
             <Ionicons name="people" size={32} />
             <Text style={styles.text}>Cliente</Text>
           </TouchableOpacity>

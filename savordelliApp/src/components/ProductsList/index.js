@@ -55,7 +55,7 @@ export function ProductsList({ data }) {
             <View style={styles.card}>
 
                 <Image style={styles.img}
-                    source={{ uri: data.imagem }} />
+                    source={{ uri: data.imagem_link }} />
 
                 <View style={styles.containerText} >
                     <Text style={styles.styleNome}>{data.nome}</Text>

@@ -34,11 +34,11 @@ export function EditProduct({ }) {
     descricao: yup.string().max(400, "descrição não preenchida").required("Insira a descrição do produto"),
     imagem_link: yup.string().max(300, "informe a url da imagem do produto").required("Insira a url do do produto"),
     imagem_blob: yup.string(),
-    data_vencimento: yup.number("Altere a data de validade (dd/mm/yyyy)").moreThan(11, 'Número muito grande'),
-    qtd_estoque: yup.number().max(2000, "informe a quantidade do produto").required("Insira a quantidade do produto"),
-    qtd_min: yup.number().max(100, "informe a quantidade mínima do produto no estoque").required("Insira a quantidade do produto"),
-    preco_custo: yup.number().lessThan(1000),
-    preco_venda: yup.number().max(6, "informe o preço de venda do produto").required("Insira o preço do produto"),
+    data_vencimento: yup.string("Altere a data de validade (dd/mm/yyyy)").max(11, 'Número muito grande'),
+    qtd_estoque: yup.number().max(5000, "informe a quantidade do produto").required("Insira a quantidade do produto"),
+    qtd_min: yup.number().max(100, "quantidade minima muito grande").required("Insira a quantidade do produto"),
+    preco_custo: yup.number("deve ser um").lessThan(3000, "informe o preço de venda do produto").required("Insira o preço do produto"),
+    preco_venda: yup.number().lessThan(3000, "informe o preço de venda do produto").required("Insira o preço do produto"),
     marca_id: yup.string().max(15, "informe a marca do produto").required("Insira o nome da marca do produto"),
     nome_novo: yup.string().max(45, "nome não preenchido").required("Insira o nome do produto"),
   })
@@ -49,13 +49,14 @@ export function EditProduct({ }) {
     resolver: yupResolver(schema)
   })
 
-
-  const idProduct = route.params?.data.id
   //funçao que valida os valores dos inputs e entra na tela estoque
   async function handleEditProduct(data) {
+
+    data.data_vencimento = data.data_vencimento.split('/').reverse().join('-');
+
     try {
 
-      const response = await fetch('http://192.168.15.45:3030/Produto/edit',
+      const response = await fetch('http://18.231.16.235:3030/Produto/edit',
         {
           method: 'PUT',
           headers: {
@@ -188,7 +189,7 @@ export function EditProduct({ }) {
   };
 
 
-  
+
   return (
     <ScrollView style={styles.container}>
 
@@ -196,7 +197,7 @@ export function EditProduct({ }) {
         <Image
           style={styles.img}
           defaultSource={{ uri: route.params?.data.imagem_link }}
-          source={{ uri: route.params?.data.imagem_link  }}
+          source={{ uri: route.params?.data.imagem_link }}
         />
         <Ionicons name="create-outline" size={32} />
       </TouchableOpacity>
@@ -424,7 +425,7 @@ export function EditProduct({ }) {
                     onChangeText={onChange}
                     value={value}
                     onBlur={onBlur}//quando o text input é tocado
-                    
+
                   />
                 )}
               />
@@ -508,7 +509,7 @@ export function EditProduct({ }) {
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     style={[styles.input, {
-                     borderBottomWidth: errors.nome_novo && 2,
+                      borderBottomWidth: errors.nome_novo && 2,
                       borderColor: errors.nome_novo && '#ff375b'
                     }]}
                     placeholder={"Digite o novo nome do produto"}
@@ -555,78 +556,78 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center'
   },
-    img: {
-      width: 180,
-      height: 180,
-      backgroundColor: '#F0A500',
-      alignSelf: 'center',
-      position: 'absolute'
-    },
-    title: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginTop: 20,
-      marginBottom: 5,
+  img: {
+    width: 180,
+    height: 180,
+    backgroundColor: '#F0A500',
+    alignSelf: 'center',
+    position: 'absolute'
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 5,
 
-    },
-    titleLogin: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginTop: 28,
+  },
+  titleLogin: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 28,
 
-    },
-    input: {
-      width: '100%',
-      height: 50,
-      backgroundColor: '#fff',
-      borderRadius: 5,
-      
-      borderBottomWidth: 2,
-      borderColor: '#F0A500',
-      paddingStart: 8,
-      paddingRight: 8,
-    },
-    inputIcon: {
-      width: '90%',
-      maxWidth: '90%',
-      height: 30,
-      backgroundColor: '#fff',
-      borderRadius: 3, paddingStart: 8
-    },
-    boxInputIcon: {
-      width: '100%',
-      height: 50,
-      backgroundColor: '#fff',
-      borderRadius: 5,
-      paddingStart: 8,
-      paddingRight: 8,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    },
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 5,
 
-    buttonCadastro: {
-      width: '40%',
-      backgroundColor: 'black',
-      borderRadius: 5,
-      paddingVertical: 8,
-      alignSelf: 'flex-end',
-      alignItems: 'center',
-      marginTop: 20,
-      marginBottom: '10%'
-    },
-    buttonText: {
-      color: '#f2f2f2',
-      fontSize: 16,
-      fontWeight: 'bold'
-    },
-    labelError: {
-      alignSelf: 'flex-start',
-      color: '#ff375b',
+    borderBottomWidth: 2,
+    borderColor: '#F0A500',
+    paddingStart: 8,
+    paddingRight: 8,
+  },
+  inputIcon: {
+    width: '90%',
+    maxWidth: '90%',
+    height: 30,
+    backgroundColor: '#fff',
+    borderRadius: 3, paddingStart: 8
+  },
+  boxInputIcon: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingStart: 8,
+    paddingRight: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 
-    },
+  buttonCadastro: {
+    width: '40%',
+    backgroundColor: 'black',
+    borderRadius: 5,
+    paddingVertical: 8,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: '10%'
+  },
+  buttonText: {
+    color: '#f2f2f2',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  labelError: {
+    alignSelf: 'flex-start',
+    color: '#ff375b',
 
-
+  },
 
 
-  })
+
+
+})

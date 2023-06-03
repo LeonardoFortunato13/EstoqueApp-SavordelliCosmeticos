@@ -34,11 +34,11 @@ import {
       descricao: yup.string().max(400, "descrição não preenchida").required("Insira a descrição do produto"),
       imagem_link: yup.string().max(300, "informe a url da imagem do produto").required("Insira a url do do produto"),
       imagem_blob: yup.string(),
-      data_vencimento: yup.number().moreThan(11, 'Número muito grande'),
-      qtd_estoque: yup.number().max(6, "informe a quantidade do produto").required("Insira a quantidade do produto"),
-      qtd_min: yup.number().max(6, "informe a quantidade mínima do produto no estoque").required("Insira a quantidade do produto"),
-      preco_custo: yup.number(parseFloat()),
-      preco_venda: yup.number().max(6, "informe o preço de venda do produto").required("Insira o preço do produto"),
+      data_vencimento: yup.string("Altere a data de validade (dd/mm/yyyy)").max(11, 'Número muito grande'),
+      qtd_estoque: yup.number().max(5000, "informe a quantidade do produto").required("Insira a quantidade do produto"),
+      qtd_min: yup.number().max(100, "quandidade minima muito grande").required("Insira a quantidade do produto"),
+      preco_custo: yup.number().lessThan(3000, "informe o preço de venda do produto").required("Insira o preço do produto"),
+      preco_venda: yup.number().lessThan(3000, "informe o preço de venda do produto").required("Insira o preço do produto"),
       marca_id: yup.string().max(15, "informe a marca do produto").required("Insira o nome da marca do produto"),
    
     })
@@ -51,9 +51,10 @@ import {
     const idProduct = route.params?.data.id
     //funçao que valida os valores dos inputs e entra na tela estoque
     async function handleRegisterProduct(data) {
+    
       try {
-  
-        const response = await fetch('http://192.168.15.45:3030/Produto/create',
+        data.data_vencimento = data.data_vencimento.split('/').reverse().join('-');
+        const response = await fetch('http://18.231.16.235:3030/Produto/create',
           {
             method: 'POST',
             headers: {

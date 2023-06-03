@@ -40,7 +40,7 @@ export function RegisterCategory({ }) {
     async function handleRegisterCategory(data) {
         try {
 
-            const response = await fetch('http://192.168.43.184:3030/Categoria/create',
+            const response = await fetch('http://18.231.16.235:3030/Categoria/create',
                 {
                     method: 'POST',
                     headers: {
@@ -128,12 +128,7 @@ const styles = StyleSheet.create({
         width: '100%'
 
     },
-    img: {
-        width: 180,
-        height: 180,
-        backgroundColor: 'purple',
-        alignSelf: 'center'
-    },
+    
     title: {
         fontSize: 16,
         fontWeight: 'bold',

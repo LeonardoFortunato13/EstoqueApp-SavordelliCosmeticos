@@ -94,7 +94,7 @@ export function Estoque() {
            
                 <VirtualizedList
                     data={produtos}
-                    keyExtractor={(item) => String(item.id)}
+                    keyExtractor={(item) => String(item.nome)}
                     renderItem={({ item }) => <ProductsList data={item} />}
                     getItemCount={() => produtos.length}
                     getItem={(produtos, index) => produtos[index]}

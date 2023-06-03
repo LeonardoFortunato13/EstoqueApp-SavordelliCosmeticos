@@ -69,7 +69,7 @@ export function Home() {
                         horizontal={true}
                         style={styles.containerCard}
                         data={categoria}
-                        keyExtractor={(item) => String(item.id)}
+                        keyExtractor={(item) => String(item.categoria)}
                         renderItem={({ item }) => <CardCategory data={item} />}
                         getItemCount={() => categoria.length}
                         getItem={(categoria, index) => categoria[index]}
@@ -80,7 +80,9 @@ export function Home() {
 
                 <View style={{ height: 2, width: '70%', backgroundColor: 'black', marginTop: 20, alignSelf: 'flex-start', marginStart: 20 }} />
                 <Text style={styles.title}>Favoritos</Text>
-                <Card />
+                <Card 
+                    img = {styles.ty}
+                />
                 <View style={{ height: 2, width: '70%', backgroundColor: 'black', marginTop: 20, alignSelf: 'flex-start', marginStart: 20 }} />
                 <Text style={styles.title}>Marca</Text>
                 <Card />

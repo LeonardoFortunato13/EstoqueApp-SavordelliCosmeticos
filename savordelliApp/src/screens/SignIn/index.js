@@ -34,18 +34,17 @@ export function SignIn({ navigation }) {
   async function handleLoginUser(data) {
 
     try {
-      // const response = await api.get('/User/login',
-      //   data);
-      // console.log(response.data)
+      //  const response = await api.get('/User/login',
+      //    data);
+      //  console.log(response.data)
 
-      // const arrayData = [response.data]
-      // const value = arrayData.map(arrayData => arrayData.success)
-      // const v = value.toString()
-
-      // v == "false"
-      if (true) {
+      //  const arrayData = [response.data]
+      //  const value = arrayData.map(arrayData => arrayData.success)
+      //  const v = value.toString()
+      //  v == "false"
+      if (false) {
         ToastAndroid.show('Usuário não cadastrado ou algum campo pode estar errado', ToastAndroid.SHORT);
-        return navigation.navigate("Main")
+       
       } else {
         ToastAndroid.show('Bem vindo(a)', ToastAndroid.SHORT);
         return navigation.navigate("Main")

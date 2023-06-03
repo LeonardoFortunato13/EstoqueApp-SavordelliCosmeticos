@@ -40,7 +40,7 @@ export function RegisterSubcategory({ }) {
     async function handleRegisterSubcategoria(data) {
         try {
 
-            const response = await fetch('http://192.168.43.184:3030/Subcategoria/create',
+            const response = await fetch('http://18.231.16.235:3030/Subcategoria/create',
                 {
                     method: 'POST',
                     headers: {

@@ -15,7 +15,7 @@ export function ProductsList({ data }) {
     const handleDeleteItem = async () => {
         try {
 
-            const response = await fetch('http://192.168.43.184:3030/Produto/delete',
+            const response = await fetch('http://18.231.16.235:3030/Produto/delete',
               {
                 method: 'DELETE',
                 headers: {

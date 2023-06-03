@@ -28,7 +28,7 @@ export function SignUp({ navigation }) {
     async function handleCreateUser(data) {
 
         try {
-            const response = await fetch('http://192.168.15.45:3030/User/create',
+            const response = await fetch('http://18.231.16.235:3030/User/create',
                 {
                     method: 'POST',
                     headers: {
@@ -85,7 +85,7 @@ export function SignUp({ navigation }) {
                                             borderWidth: errors.username && 2,
                                             borderColor: errors.username && '#ff375b',
                                         }]}
-                                        placeholder="Digite seu username de usuário"
+                                        placeholder="Digite seu nome de usuário"
                                         onChangeText={onChange}
                                         value={value}
                                         onBlur={onBlur}//quando o text input é tocado

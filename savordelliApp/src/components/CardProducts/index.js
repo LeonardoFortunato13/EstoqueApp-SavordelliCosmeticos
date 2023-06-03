@@ -8,20 +8,17 @@ export function Card({text1, text2, text3, text4, text5, img}) {
             <View style={styles.card}>
 
                 <Image style={styles.img} 
-                source={{uri: img}}/>
+                resizeMode='contain'
+                source={require("../../assets/silhueta-de-formato-simples-de-coracao.png")}/>
 
                 <View style={styles.containerText}>
                     <Text style={styles.styleNome}>{text1}</Text>
-                    <Text style={styles.styleText}>código: {text2}</Text>
-                    <Text style={styles.styleText}>quantidade: {text3}</Text>
+                    <Text style={styles.styleText}>Produtos favoritados {text2}</Text>
+                    
                
                     
                 </View>
-                <View style={styles.containerText2}>
-                         <Text style={styles.styleText}>preço venda: {text4}</Text>
-                    <Text style={styles.styleText} >validade: {text5}</Text>
-            
-                </View>
+                
 
 
             </View>
@@ -69,7 +66,8 @@ const styles = StyleSheet.create({
         
     },
     styleText:{
-        fontSize: 12,    
-        paddingTop: 4
+        fontSize: 15,    
+        paddingStart:10,
+        fontWeight: 'bold'
     }
 })

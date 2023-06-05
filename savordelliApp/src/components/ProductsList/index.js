@@ -9,33 +9,33 @@ export function ProductsList({ data }) {
     data.data_vencimento = data.data_vencimento.split("T")[0];
     data.data_vencimento = data.data_vencimento.split("-").reverse().join("/");
     let nome = data.nome;
-    
+
     //guarta o contexto do estado normal
     const { deleteButtonVisible } = useContext(ButtonContext);
     const handleDeleteItem = async () => {
         try {
 
             const response = await fetch('http://18.231.16.235:3030/Produto/delete',
-              {
-                method: 'DELETE',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-              });
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
             console.log(data)
             if (response.ok) {
-              ToastAndroid.show('Delete com sucesso 🎉!', ToastAndroid.SHORT);
-             
+                ToastAndroid.show('Delete com sucesso 🎉!', ToastAndroid.SHORT);
+
             } else {
-              console.error('Erro ao cadastrar o produto:', response);
-      
-      
+                console.error('Erro ao cadastrar o produto:', response);
+
+
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Erro ao realizar a solicitação:', error);
-          }
-        
+        }
+
 
         // // Atualizar os dados após a exclusão
         // const updatedData = data.filter((item) => item.id !== itemId);
@@ -86,15 +86,24 @@ export function ProductsList({ data }) {
     )
 }
 const styles = StyleSheet.create({
+    container: {
+        elevation: 3,
+        width: '99%',
+        borderRadius: 10,
+        backgroundColor: "#fff",
+        margin: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginTop: 8,
+    },
     card: {
-        width: '100%',
+        width: '99%',
+        margin: 2,
         height: 110,
         backgroundColor: '#fff',
         borderRadius: 10,
         alignItems: 'center',
         flexDirection: 'row',
-        marginTop: 8,
-       
     },
     containerText: {
         width: '38%',
@@ -120,8 +129,8 @@ const styles = StyleSheet.create({
         height: '80%',
         backgroundColor: 'white',
         marginStart: 12,
-        
-        
+
+
     },
     styleNome: {
         fontWeight: 'bold',
@@ -141,5 +150,5 @@ const styles = StyleSheet.create({
         padding: 5,
 
     },
-  
+
 })

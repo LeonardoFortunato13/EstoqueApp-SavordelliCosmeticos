@@ -36,7 +36,7 @@ export function SignUp({ navigation }) {
                     },
                     body: JSON.stringify(data),
                 });
-            
+                console.log(response)
             if (response.ok) {             
                 
                 ToastAndroid.show('Usuario cadastrado com sucesso!', ToastAndroid.SHORT);
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2',
         paddingStart: '5%',
         paddingEnd: '5%',
-
+        elevation:5
     },
 
     containerInputs: {
@@ -206,8 +206,9 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 11,
         paddingStart: '5%',
         paddingEnd: '5%',
-        backgroundColor: '#F0A500'
-
+        backgroundColor: '#F0A500',
+        elevation: 10
+    
     },
     label: {
         fontSize: 16,
@@ -241,7 +242,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 8,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        elevation:10
     },
     buttonText: {
         color: '#f2f2f2',

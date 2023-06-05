@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ScrollView, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useLayoutEffect, useState } from 'react'
-import { Entypo, AntDesign } from '@expo/vector-icons'
+import { Entypo, AntDesign,Ionicons } from '@expo/vector-icons'
 import { AtributeView } from '../../components/AtributeView/index';
 
 //Tela de detalhes do produto
@@ -10,9 +10,9 @@ export function Detail() {
     const [description, setDescription] = useState("")
     const route = useRoute();
     const navigation = useNavigation();
-    
 
-    
+
+
     //usando o useLayoutEffect para alterar o nome do header conforme o produto clicado
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -26,22 +26,24 @@ export function Detail() {
                     />
                 </Pressable>,
                 <Pressable onPress={handleNavigate}>
-                    <Entypo
-                        name='pencil'
-                        size={28}
-                        color={"#000"}
+                    <Ionicons
+                        name="create"
+                        color={"black"}
+                        size={32}
+                        style={{ alignSelf: 'flex-end' }}
                     />
                 </Pressable>
-                
+
             )
         })
     }, [navigation, route.params?.data])
-    
-    function handleNavigate({}) {
+
+    function handleNavigate({ }) {
         return (
             navigation.navigate("b", { data: route.params?.data })
 
-        )}
+        )
+    }
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Pressable>
@@ -57,9 +59,9 @@ export function Detail() {
 
                 </View>
             </View>
-            <TextInput style={styles.textArea} 
-            value={route.params?.data.descricao}
-            onChange={setDescription}
+            <TextInput style={styles.textArea}
+                value={route.params?.data.descricao}
+                onChange={setDescription}
             ></TextInput>
 
             <View>
@@ -68,9 +70,9 @@ export function Detail() {
                 <View style={{ flex: 1, height: 2, width: '50%', backgroundColor: 'black', marginBottom: 14 }} />
             </View>
 
-           
-                <AtributeView data={route.params?.data}/>
-         
+
+            <AtributeView data={route.params?.data} />
+
 
 
         </ScrollView>
@@ -95,11 +97,11 @@ const styles = StyleSheet.create({
     },
     textArea: {
         width: '100%',
-        
+
         height: 180,
         backgroundColor: '#D9D9D9',
         margin: 10,
-        paddingBottom:100
+        paddingBottom: 100
     },
     title: {
         fontSize: 16,

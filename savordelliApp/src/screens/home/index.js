@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Image, VirtualizedList, ImageBackground } from 'react-native';
 import { Card } from '../../components/CardProducts'
-import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { CardCategory } from '../../components/CardCategory';
 import api from '../../services/api';
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
-import { DrawerNavigation } from '../../routes';
+
 
 export function Home() {
     const [categoria, setCategoria] = useState([])
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         gap: 10,
         marginTop: 130,
         zIndex: 1,
-
+        elevation: 10
     },
     column: {
         flex: 0.3,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginTop: 20,
         alignItems: 'center',
-
+        elevation: 10
     },
     headerCategoria: {
         width: "100%",
@@ -167,14 +167,15 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         backgroundColor: '#b3b3b3',
-        borderRadius: 5
-
+        borderRadius: 5,
+        elevation: 5
     },
     containerCard: {
         width: "100%",
         maxWidth: "90%",
         marginTop: 20,
         flexDirection: 'row',
+        elevation: 5
     },
     title: {
         fontWeight: 'bold',

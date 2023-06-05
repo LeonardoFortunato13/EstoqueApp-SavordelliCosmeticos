@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView , Image} from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Image } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
@@ -6,54 +6,98 @@ import { RegisterProduct } from '../RegisterProduct';
 
 export function Create() {
   const navigation = useNavigation();
-  
+
   return (
     <ScrollView>
       <View style={styles.container}>
 
         <View style={styles.containerText}>
-          <Text style={styles.title}>Organize do seu jeito </Text>
-          <Text style={styles.text}>Escolha o que cadastrar no seu sistema de estoque.</Text>
+          <Text style={styles.title}>Escolha o que cadastrar no seu sistema de estoque.</Text>
+        
         </View>
 
 
-        <View style={styles.containerButtonsOne}>
-          <TouchableOpacity style={styles.cardButton} onPress={()=> navigation.navigate("Cadastrar Produto")}>
-           <Image
-           source ={require("../../assets/produtos-de-higiene.png")}/>
-            <Text style={styles.text}>Produto</Text>
+
+        <View style={styles.containerButtonsOne} >
+          <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate("Cadastrar Produto")}>
+
+          
+              <Image
+                source={require("../../assets/produtos-de-higiene.png")} />
+        
+         
+              <Text style={styles.text}>Produto</Text>
+              <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+                style={{alignSelf: 'flex-end'}}
+              />
+         
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardButton}  onPress={()=> navigation.navigate("Cadastrar Categoria")}>
-          <Image
-           source ={require("../../assets/categorias.png.png")}/>
+          <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate("Cadastrar Categoria")}>
+            <Image
+              source={require("../../assets/categorias.png.png")} />
             <Text style={styles.text}>Categoria</Text>
+            <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+              style={{alignSelf: 'flex-end'}}
+              />
           </TouchableOpacity>
 
         </View>
 
         <View style={styles.containerButtonsTwo}>
-          <TouchableOpacity style={styles.cardButton} onPress={()=> navigation.navigate("Cadastrar Subcategoria")}>
-          <Image
-           source ={require("../../assets/subcategorias.png")}/>
+          <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate("Cadastrar Subcategoria")}>
+            <Image
+              source={require("../../assets/subcategorias.png")} />
             <Text style={styles.text}>Subcategoria</Text>
+            <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+              style={{alignSelf: 'flex-end'}}
+              />
           </TouchableOpacity>
-        
-          <TouchableOpacity style={styles.cardButton} onPress={()=> navigation.navigate("Cadastrar Marca")}>
-          <Image
-           source ={require("../../assets/logo-eudora-256.png")}/>
+
+          <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate("Cadastrar Marca")}>
+            <Image
+              source={require("../../assets/logo-eudora-256.png")} />
             <Text style={styles.text}>Marca</Text>
+            <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+              style={{alignSelf: 'flex-end'}}
+              />
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.containerButtonsOne}>
-          <TouchableOpacity style={styles.cardButton} onPress={()=> navigation.navigate("Menu")}>
+          <TouchableOpacity style={styles.cardButton} onPress={() => navigation.navigate("Menu")}>
             <Ionicons name="people" size={32} />
             <Text style={styles.text}>Cliente</Text>
+            <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+              style={{alignSelf: 'flex-end'}}
+              />
           </TouchableOpacity>
+          
+
           <TouchableOpacity style={styles.cardButton}>
             <Ionicons name="receipt-outline" size={32} />
             <Text style={styles.text}>Fornecedor</Text>
+            <Ionicons
+                name="add"
+                color={"black"}
+                size={32}
+              style={{alignSelf: 'flex-end'}}
+              />
           </TouchableOpacity>
 
         </View>
@@ -75,9 +119,10 @@ const styles = StyleSheet.create({
     height: 130,
     backgroundColor: '#fff',
     borderRadius: 12,
-    paddingTop: 20,
+    paddingTop: 30,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    elevation: 5
   },
   containerButtonsOne: {
     height: 180,
@@ -103,18 +148,25 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderBottomStartRadius: 15
   },
-  containerText: {
+  addContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+   margin:10,
+ 
+  },
+  iconContainer: {
+    backgroundColor: "green"
 
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 15
+    marginTop: 15,
+    paddingBottom:16
   },
   text: {
     fontSize: 16,
     fontWeight: '700',
-    paddingBottom: 32,
-    paddingTop: 8
+    padding: 5
   }
 })

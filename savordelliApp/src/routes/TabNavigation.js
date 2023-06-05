@@ -40,9 +40,9 @@ export function TabNavigation() {
                     headerShown: false,
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {
-                            return <Ionicons name='home' color="#f2f2f2" size={size} />
+                            return <Ionicons name='home' color="#F0A500" size={size} />
                         } else {
-                            return <Ionicons name='home-outline' color={color} size={size} />
+                            return <Ionicons name='home-outline' color={"#f2f2f2"} size={size} />
                         }
 
                     }
@@ -73,9 +73,9 @@ export function TabNavigation() {
                     headerShown: false,
                     tabBarIcon: ({ color, size, focused }) => {
                         if (focused) {
-                            return <Ionicons name='cube' color="#f2f2f2" size={size} />
+                            return <Ionicons name='cube' color={"#F0A500"} size={size} />
                         }
-                        return <Ionicons name='cube-outline' color="#f2f2f2" size={size} />
+                        return <Ionicons name='cube-outline' color={"#f2f2f2"} size={size} />
 
                     }
 

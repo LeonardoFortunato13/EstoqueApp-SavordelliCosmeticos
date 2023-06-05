@@ -34,15 +34,15 @@ export function SignIn({ navigation }) {
   async function handleLoginUser(data) {
 
     try {
-      //  const response = await api.get('/User/login',
-      //    data);
-      //  console.log(response.data)
+        const response = await api.post('/User/login',
+          data);
+        console.log(response.data)
 
-      //  const arrayData = [response.data]
-      //  const value = arrayData.map(arrayData => arrayData.success)
-      //  const v = value.toString()
-      //  v == "false"
-      if (false) {
+        const arrayData = [response.data]
+        const value = arrayData.map(arrayData => arrayData.success)
+        const v = value.toString()
+       
+      if (v == "false") {
         ToastAndroid.show('Usuário não cadastrado ou algum campo pode estar errado', ToastAndroid.SHORT);
        
       } else {
@@ -124,7 +124,7 @@ export function SignIn({ navigation }) {
               />
               {errors.password && <Text style={styles.labelError}> {errors.password?.message} </Text>}
               <View style={styles.containerButtons}>
-                <TouchableOpacity onPress={handleSubmit(handleLoginUser)} style={styles.buttonLogin}>
+                <TouchableOpacity  onPress={handleSubmit(handleLoginUser)} style={styles.buttonLogin}>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 11,
     paddingStart: '5%',
     paddingEnd: '5%',
-
+    elevation:5
   },
   containerButtons: {
     paddingTop: '5%',
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 20,
-
+    marginBottom: 5
   },
   titleLogin: {
     fontSize: 24,
@@ -200,7 +200,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     paddingStart: '5%',
-    paddingEnd: '5%'
+    paddingEnd: '5%',
+    elevation:5
   },
   buttonCadastro: {
     width: '40%',
@@ -208,7 +209,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 8,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    elevation:5
   },
   buttonLogin: {
     width: '40%',
@@ -216,7 +218,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 8,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    elevation:5
+    
   },
   buttonText: {
     color: '#f2f2f2',

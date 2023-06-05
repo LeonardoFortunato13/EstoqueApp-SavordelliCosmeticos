@@ -27,7 +27,7 @@ export function RegisterMarca({ }) {
     const route = useRoute();
     const navigation = useNavigation();
     const schema = yup.object({
-        marca: yup.string().max(6, "Texto muito grande").required("Insira o nome da marca desejada"),
+        marca: yup.string().max(25, "Texto muito grande").required("Insira o nome da marca desejada"),
 
     })
 

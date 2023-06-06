@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View, TouchableOpacity, Image, Modal, ToastAndroid } from 'react-native'
+import { Text, StyleSheet, View, TouchableOpacity, Image, Modal, ToastAndroid, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 import { useContext } from 'react';
@@ -13,8 +13,8 @@ export function ProductsList({ data }) {
     //guarta o contexto do estado normal
     const { deleteButtonVisible } = useContext(ButtonContext);
     const handleDeleteItem = async () => {
+    
         try {
-
             const response = await fetch('http://18.231.16.235:3030/Produto/delete',
                 {
                     method: 'DELETE',

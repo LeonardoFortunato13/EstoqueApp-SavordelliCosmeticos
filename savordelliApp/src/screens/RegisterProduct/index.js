@@ -33,8 +33,7 @@ export function RegisterProduct({ }) {
     //categoria: yup.string().max(6, "informe a categoria do produto").required("Insira o nome da categoria"),
     tamanho: yup.string().max(15, "informe o tamanho do produto em ml").required("Insira o tamanho do produto"),
     descricao: yup.string().max(400, "descrição não preenchida").required("Insira a descrição do produto"),
-    imagem_link: yup.string().max(300, "informe a url da imagem do produto").required("Insira a url do do produto"),
-    imagem_blob: yup.string(),
+    imagem_link: yup.string().max(400, "informe a url da imagem do produto").required("Insira a url do do produto"),
     data_vencimento: yup.string("Altere a data de validade (dd/mm/yyyy)").max(11, 'Número muito grande'),
     qtd_estoque: yup.number().max(5000, "informe a quantidade do produto").required("Insira a quantidade do produto"),
     qtd_min: yup.number().max(100, "quandidade minima muito grande").required("Insira a quantidade do produto"),
@@ -61,7 +60,7 @@ export function RegisterProduct({ }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data, { "imagem_blob": ""}),
+          body: JSON.stringify(data),
         });
       // const responseCategoria = await fetch('http://192.168.43.184:3030/Categoria/create',
       // {
@@ -187,10 +186,10 @@ export function RegisterProduct({ }) {
         body: formData
       });
 
-      const jsonResponse = await response.json()
+      var jsonResponse = await response.json()
       console.log(jsonResponse)
 
-      const imgUploadedCloudinary = jsonResponse.secure_url
+      var imgUploadedCloudinary = jsonResponse.secure_url
       setImageSource(imgUploadedCloudinary)
 
     } catch (error) {
@@ -271,7 +270,7 @@ export function RegisterProduct({ }) {
                     }]}
                     placeholder={"Digite a URL da imagem"}
                     onChangeText={onChange}
-                    value={value}
+                    value={imageSource}
                     onBlur={onBlur}//quando o text input é tocado
                   />
                 )}
@@ -326,32 +325,6 @@ export function RegisterProduct({ }) {
               />
               {/* //quando errors usename for true, vai renderizar essa altercao */}
               {errors.nome && <Text style={styles.labelError}> {errors.nome?.message} </Text>}
-
-              <Text style={styles.title}>imagem_blob</Text>
-              <Controller
-                control={control}
-                name="imagem_blob"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <View style={styles.boxInputIcon}>
-                    <TextInput
-                      style={[styles.inputIcon, {
-                        borderWidth: errors.imagem_blob && 2,
-                        borderColor: errors.imagem_blob && '#ff375b'
-                      }]}
-                      placeholder="Digite seu e-mail"
-                      onChangeText={onChange}
-                      value={value}
-                      onBlur={onBlur}//quando o text input é tocado
-
-                    />
-                    <TouchableOpacity >
-                      <Ionicons name='chevron-down' size={28} color="#121212" />
-                    </TouchableOpacity>
-                  </View>
-                )}
-              />
-
-              {errors.imagem_blob && <Text style={styles.labelError}> {errors.imagem_blob?.message} </Text>}
 
               <Text style={styles.title}>Marca</Text>
               <Controller

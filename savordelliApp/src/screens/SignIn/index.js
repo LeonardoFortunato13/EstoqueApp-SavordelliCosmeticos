@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
     flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    top: '5%'
+    top: '5%',
+    elevation: 10
   },
   containerForm: {
     flex: 1,
@@ -164,7 +165,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 11,
     paddingStart: '5%',
     paddingEnd: '5%',
-    elevation:5
+    elevation:10,
+    maxHeight: '90%'
   },
   containerButtons: {
     paddingTop: '5%',
@@ -184,12 +186,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 20,
+    
     marginBottom: 5
   },
   titleLogin: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 28,
+    marginBottom: 15,
 
   },
   input: {

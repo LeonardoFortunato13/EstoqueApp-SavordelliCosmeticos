@@ -9,6 +9,7 @@ import React, { useContext } from 'react';
 import { ButtonContext } from '../../components/ButtonContext/index';
 
 import api from '../../services/api'
+import { useFocusEffect } from "@react-navigation/native";
 export function Estoque() {
 
     // 1°nome do estado, 2° funcao que troca o valor do estado
@@ -25,24 +26,26 @@ export function Estoque() {
     };
 
 
-    //quando o app é carregado na tela ele vai exucutar o estiver dentro da função anonima
-    useEffect(() => {
+    useFocusEffect(
+        React.useCallback(() => {
+          //requisição http tipo get para buscar os produtos
+            //função assincrona, esperando(await) a requisição para retornar algo
+            async function fetchAPI() {
+                const response = await api.get("/Produto/mostrar")
+                setProdutos(response.data)
+            }
+         
 
-        //requisição http tipo get para buscar os produtos
-        //função assincrona, esperando(await) a requisição para retornar algo
-        async function fetchAPI() {
-            const response = await api.get("/Produto/mostrar")
-            setProdutos(response.data)
-        }
-
-        fetchAPI()
-    }, [])
+            fetchAPI()
+        }, [])
+      );
+    
 
     //metodo do botao de filtrar pesquisa
     function handleSearch() {
 
-        console.log(inputValue)
-    }
+            console.log(inputValue)
+        }
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -91,16 +94,16 @@ export function Estoque() {
                     <Ionicons name='search' size={28} color="#F0A500" />
                 </TouchableOpacity>
             </View>
-           
-                <VirtualizedList
-                    data={produtos}
-                    keyExtractor={(item) => String(item.nome)}
-                    renderItem={({ item }) => <ProductsList data={item} />}
-                    getItemCount={() => produtos.length}
-                    getItem={(produtos, index) => produtos[index]}
 
-                />
-            
+            <VirtualizedList
+                data={produtos}
+                keyExtractor={(item) => String(item.nome)}
+                renderItem={({ item }) => <ProductsList data={item} />}
+                getItemCount={() => produtos.length}
+                getItem={(produtos, index) => produtos[index]}
+
+            />
+
         </SafeAreaView >
     )
 
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        elevation:5
+        elevation: 5
 
     },
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, ScrollView, Image, TextInput } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useLayoutEffect, useState } from 'react'
-import { Entypo, AntDesign,Ionicons } from '@expo/vector-icons'
+import { Entypo, AntDesign, Ionicons } from '@expo/vector-icons'
 import { AtributeView } from '../../components/AtributeView/index';
 
 //Tela de detalhes do produto
@@ -59,10 +59,10 @@ export function Detail() {
 
                 </View>
             </View>
-            <TextInput style={styles.textArea}
-                value={route.params?.data.descricao}
-                onChange={setDescription}
-            ></TextInput>
+            <View style={styles.textArea}>
+            <Text style={styles.descriptionTitle}>Descrição</Text>
+                <Text style={styles.description}>{route.params?.data.descricao}</Text>
+            </View>
 
             <View>
                 <Text style={styles.title2}>Detalhes</Text>
@@ -96,12 +96,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#D9D9D9',
     },
     textArea: {
-        width: '100%',
-
+        width: '95%',
         height: 180,
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#1A1C20',
         margin: 10,
-        paddingBottom: 100
+        paddingTop: 20,
+        paddingBottom: 100,
+        paddingStart: 10,
+        borderRadius: 10
     },
     title: {
         fontSize: 16,
@@ -116,8 +118,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         width: 100,
         textAlign: 'center',
-        marginTop: 16,
+        marginTop: 5,
         paddingBottom: 4
+    },
+    description:{
+        padding: 10,
+        fontWeight: '400',
+        color: 'white'
+    },
+    descriptionTitle:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: 100,
+        textAlign: 'center',
+        marginTop: 5,
+        paddingBottom: 4,
+        color: 'white'
+   
     }
 
 
